@@ -4,16 +4,18 @@ import Image from 'next/image'
 
 import React from 'react'
 
-type Props = {}
+type Props = {
+  image?: string | null | undefined
+}
 
-const Avatar = (props: Props) => {
+const Avatar = ({ image }: Props) => {
   return (
     <Image
       className="rounded-full"
       alt="avatar"
       width="30"
       height="30"
-      src="/images/avatar.jpg"
+      src={image || '/images/avatar.jpg'}
     />
   )
 }

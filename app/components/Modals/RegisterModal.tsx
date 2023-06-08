@@ -12,6 +12,7 @@ import Modal from './index'
 import Heading from '../Helper/Heading'
 import Input from '../Inputs/Inputs'
 import Button from '../Helper/Button'
+import { signIn } from 'next-auth/react'
 
 const RegisterModal = () => {
   const registerModal = useRegisterModal()
@@ -91,7 +92,7 @@ const RegisterModal = () => {
         label="Continue with Github"
         outline
         small
-        onClick={() => {}}
+        onClick={() => signIn('github')}
         icon={AiFillGithub}
       />
       <div className="flex justify-center gap-1 text-sm">
