@@ -1,37 +1,35 @@
 'use client'
 
-import {
-  FieldErrors,
-  FieldValues,
-  UseFormRegister,
-  useForm,
-} from 'react-hook-form'
+import { FieldErrors, FieldValues, UseFormRegister } from 'react-hook-form'
+import { IconType } from 'react-icons'
 import { BiDollar } from 'react-icons/bi'
 
 interface Props {
   id: string
   label: string
+  icon?: IconType
   message?: string
   type?: string
   disabled?: boolean
   formatPrice?: boolean
   required?: boolean
   register: UseFormRegister<FieldValues>
+  onClickIcon?: () => void
   errors: FieldErrors
 }
 
 const Input: React.FC<Props> = ({
   id,
   label,
+  icon: Icon,
   type = 'text',
   disabled,
   formatPrice,
   required,
   register,
+  onClickIcon,
   errors,
 }) => {
-  const { watch } = useForm()
-  const password = watch('password')
   return (
     <div className="relative w-full">
       {formatPrice && (
@@ -45,11 +43,18 @@ const Input: React.FC<Props> = ({
         })}
         placeholder=" "
         type={type}
-        className={`peer w-full rounded-md border-2 bg-white p-4 pt-6 font-light transition disabled:cursor-not-allowed disabled:opacity-70 
+        className={`peer w-full rounded-md border-2 bg-white p-3 pt-6 font-light transition disabled:cursor-not-allowed disabled:opacity-70 
         ${formatPrice ? 'pl-9' : 'pl-4'} 
         ${errors[id] ? 'border-rose-500' : 'border-neutral-300'} 
         ${errors[id] ? 'focus:border-rose-500' : 'focus:border-black'}`}
       />
+      {Icon && (
+        <Icon
+          className="absolute right-3 top-5 cursor-pointer"
+          size={24}
+          onClick={onClickIcon}
+        />
+      )}
       <label
         className={`
           text-md 

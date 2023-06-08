@@ -6,12 +6,14 @@ import { AiOutlineMenu } from 'react-icons/ai'
 import MenuItem from './Search/MenuItem'
 import { useRouter } from 'next/navigation'
 import useRegisterModal from '@/app/hooks/useRegisterModal'
+import useLoginModal from '@/app/hooks/useLoginModal'
 
 type Props = {}
 
 const UserMenu = ({}: Props) => {
   const [isOpen, setIsOpen] = useState(false)
-  const { onOpen } = useRegisterModal()
+  const registerModal = useRegisterModal()
+  const loginModal = useLoginModal()
 
   const router = useRouter()
 
@@ -58,8 +60,8 @@ const UserMenu = ({}: Props) => {
           </> */}
 
           <>
-            <MenuItem label="Login" onClick={() => {}} />
-            <MenuItem label="Sign up" onClick={onOpen} />
+            <MenuItem label="Login" onClick={loginModal.onOpen} />
+            <MenuItem label="Sign up" onClick={registerModal.onOpen} />
           </>
         </div>
       )}

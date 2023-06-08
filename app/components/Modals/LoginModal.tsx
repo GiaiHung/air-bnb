@@ -1,29 +1,31 @@
 'use client'
 
 import { useState, useCallback } from 'react'
-import axios from 'axios'
 import { FcGoogle } from 'react-icons/fc'
-import { AiFillGithub } from 'react-icons/ai'
+import { AiFillGithub, AiFillEyeInvisible, AiFillEye } from 'react-icons/ai'
 import { toast } from 'react-hot-toast'
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form'
-import useRegisterModal from '@/app/hooks/useRegisterModal'
 import useLoginModal from '@/app/hooks/useLoginModal'
+import useRegisterModal from '@/app/hooks/useRegisterModal'
+import { signIn } from 'next-auth/react'
+import { useRouter } from 'next/navigation'
 import Modal from './index'
 import Heading from '../Helper/Heading'
 import Input from '../Inputs/Inputs'
 import Button from '../Helper/Button'
 
-const RegisterModal = () => {
-  const registerModal = useRegisterModal()
+const LoginModal = () => {
+  const router = useRouter()
   const loginModal = useLoginModal()
+  const registerModal = useRegisterModal()
   const [isLoading, setIsLoading] = useState(false)
+  const [isShownPassword, setIsShownPassword] = useState(false)
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useForm<FieldValues>({
     defaultValues: {
-      name: '',
       email: '',
       password: '',
     },
@@ -31,24 +33,22 @@ const RegisterModal = () => {
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     setIsLoading(true)
-
-    await axios
-      .post('/api/register', data)
-      .then(() => {
-        registerModal.onClose()
-      })
-      .catch((error) => {
-        console.log(error.response.data.message)
-        toast.error('Something went wrong!')
-      })
-      .finally(() => {
-        setIsLoading(false)
-      })
+    signIn('credentials', { ...data, redirect: false }).then((callback) => {
+      setIsLoading(false)
+      if (callback?.ok) {
+        toast.success('Login successfully!')
+        router.refresh()
+      }
+      if (callback?.error) {
+        toast.error(callback.error)
+      }
+    })
+    loginModal.onClose()
   }
 
   const bodyContent = (
     <div className="flex flex-col gap-4">
-      <Heading title="Welcome to Airbnb" subtitle="Create an account!" center />
+      <Heading title="Welcome back!" subtitle="Login to your account!" center />
       <Input
         id="email"
         label="Email"
@@ -58,20 +58,14 @@ const RegisterModal = () => {
         errors={errors}
       />
       <Input
-        id="name"
-        label="Name"
-        disabled={isLoading}
-        required
-        register={register}
-        errors={errors}
-      />
-      <Input
         id="password"
         label="Password"
-        type="password"
+        icon={isShownPassword ? AiFillEye : AiFillEyeInvisible}
+        type={isShownPassword ? 'text' : 'password'}
         disabled={isLoading}
         required
         register={register}
+        onClickIcon={() => setIsShownPassword(!isShownPassword)}
         errors={errors}
       />
     </div>
@@ -95,15 +89,15 @@ const RegisterModal = () => {
         icon={AiFillGithub}
       />
       <div className="flex justify-center gap-1 text-sm">
-        <p className="text-center font-light">Already have an account?</p>
+        <p className="text-center font-light">Don`&apos;`t have an account?</p>
         <span
           className="cursor-pointer font-bold hover:underline"
           onClick={() => {
-            registerModal.onClose()
-            loginModal.onOpen()
+            loginModal.onClose()
+            registerModal.onOpen()
           }}
         >
-          Login
+          Register
         </span>
       </div>
     </div>
@@ -111,16 +105,16 @@ const RegisterModal = () => {
 
   return (
     <Modal
-      isOpen={registerModal.isOpen}
-      title="Register"
+      isOpen={loginModal.isOpen}
+      title="Login"
       actionLabel="Continue"
       disabled={isLoading}
       body={bodyContent}
       footer={footerContent}
-      onClose={registerModal.onClose}
+      onClose={loginModal.onClose}
       onSubmit={handleSubmit(onSubmit)}
     />
   )
 }
 
-export default RegisterModal
+export default LoginModal

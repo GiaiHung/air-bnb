@@ -61,9 +61,9 @@ const Modal: React.FC<Props> = ({
             showModal ? 'translate-y-0' : 'translate-y-full'
           } ${showModal ? 'opacity-100' : 'opacity-0'}`}
         >
-          <div className="translate relative flex h-full w-full flex-col rounded-lg border-0  bg-white shadow-lg outline-none focus:outline-none md:h-auto lg:h-auto">
+          <div className="translate relative flex h-full w-full flex-col rounded-lg border-0  bg-white shadow-lg outline-none focus:outline-none md:h-fit lg:h-fit">
             {/* Header */}
-            <div className="relative flex items-center justify-center rounded-t border-b-[1px] p-6 ">
+            <div className="relative flex items-center justify-center rounded-t border-b-[1px] p-4 ">
               <button
                 className="absolute right-7 border-none p-1 transition hover:opacity-70"
                 onClick={handleClose}
@@ -74,10 +74,10 @@ const Modal: React.FC<Props> = ({
             </div>
 
             {/* Body */}
-            <div className="relative flex-auto p-6">{body}</div>
+            <div className="relative p-4">{body}</div>
 
             {/* Footer */}
-            <div className="relative flex flex-col gap-2 border-t-[1px] p-6">
+            <div className="relative flex flex-col gap-2 border-t-[1px] p-4">
               <div className="flex w-full items-center justify-center gap-4">
                 {secondaryAction && secondaryActionLabel && (
                   <Button
