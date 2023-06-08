@@ -5,11 +5,13 @@ import Avatar from './Search/Avatar'
 import { AiOutlineMenu } from 'react-icons/ai'
 import MenuItem from './Search/MenuItem'
 import { useRouter } from 'next/navigation'
+import useRegisterModal from '@/app/hooks/useRegisterModal'
 
 type Props = {}
 
 const UserMenu = ({}: Props) => {
   const [isOpen, setIsOpen] = useState(false)
+  const { onOpen } = useRegisterModal()
 
   const router = useRouter()
 
@@ -36,7 +38,7 @@ const UserMenu = ({}: Props) => {
 
       {isOpen && (
         <div className="absolute right-0 top-12 w-[40vw] overflow-hidden rounded-xl bg-white text-sm shadow-md md:w-3/4">
-          <>
+          {/* <>
             <MenuItem label="My trips" onClick={() => router.push('/trips')} />
             <MenuItem
               label="My favorites"
@@ -53,12 +55,12 @@ const UserMenu = ({}: Props) => {
             <MenuItem label="Airbnb your home" onClick={() => {}} />
             <hr />
             <MenuItem label="Logout" onClick={() => {}} />
-          </>
-          {/* ) : (
+          </> */}
+
           <>
             <MenuItem label="Login" onClick={() => {}} />
-            <MenuItem label="Sign up" onClick={() => {}} />
-          </> */}
+            <MenuItem label="Sign up" onClick={onOpen} />
+          </>
         </div>
       )}
     </div>
