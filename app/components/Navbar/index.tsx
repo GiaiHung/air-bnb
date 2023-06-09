@@ -5,6 +5,7 @@ import Container from '../Container'
 import Logo from './Logo'
 import Search from './Search/Search'
 import UserMenu from './UserMenu'
+import Categories from './Categories/Categories'
 
 interface Props {
   currentUser?: User | null
@@ -22,6 +23,7 @@ export default function Navbar({ currentUser }: Props) {
           </div>
         </Container>
       </div>
+      <Categories />
     </div>
   )
 }

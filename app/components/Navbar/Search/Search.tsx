@@ -15,7 +15,7 @@ const Search = (props: Props) => {
           Any Week
         </div>
         <div className="flex cursor-pointer items-center gap-2 px-6 text-gray-600">
-          <p className="hidden sm:block">Add Guests</p>
+          <p className="hidden text-sm sm:block">Add Guests</p>
           <div className="grid items-center rounded-full bg-rose-500 p-2 text-white">
             <BiSearch size={18} />
           </div>
