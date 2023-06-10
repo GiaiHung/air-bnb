@@ -89,7 +89,7 @@ const LoginModal = () => {
         icon={AiFillGithub}
       />
       <div className="flex justify-center gap-1 text-sm">
-        <p className="text-center font-light">Don`&apos;`t have an account?</p>
+        <p className="text-center font-light">First time using Airbnb?</p>
         <span
           className="cursor-pointer font-bold hover:underline"
           onClick={() => {
@@ -97,7 +97,7 @@ const LoginModal = () => {
             registerModal.onOpen()
           }}
         >
-          Register
+          Create an account
         </span>
       </div>
     </div>

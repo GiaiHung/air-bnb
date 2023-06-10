@@ -1,3 +1,5 @@
+'use client'
+
 import Container from '../../Container'
 import { categories } from '../../../constants'
 import CategoryBox from './CategoryBox'

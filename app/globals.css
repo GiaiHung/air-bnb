@@ -1,6 +1,41 @@
 @tailwind base;
+
+:root {
+  --primary: rgb(172, 172, 172);
+  --secondary: rgb(211, 211, 211);
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--secondary) var(--primary);
+}
+
+/* Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  height: 7px;
+  width: 7px;
+  border-radius: 50%;
+}
+
+*::-webkit-scrollbar-track {
+  display: none;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: var(--secondary);
+  border-radius: 20px;
+}
+
 @tailwind components;
 @tailwind utilities;
+
+.leaflet-bottom,
+.leaflet-control,
+.leaflet-pane,
+.leaflet-top {
+  z-index: 0 !important;
+}
 
 html,
 body,
