@@ -21,7 +21,7 @@ const Button: React.FC<Props> = ({
 }) => {
   return (
     <button
-      className={`flex w-full cursor-pointer items-center justify-center gap-2 rounded-md py-1 font-semibold transition md:py-2 
+      className={`flex w-full cursor-pointer items-center justify-center gap-2 rounded-md px-4 py-1 font-semibold transition md:py-2
       ${outline ? 'bg-white' : 'bg-rose-500'}
       ${outline ? 'border-black' : 'border-rose-500'}
       ${outline ? 'text-black' : 'text-white'}

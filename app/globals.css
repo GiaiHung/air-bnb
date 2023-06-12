@@ -42,3 +42,9 @@ body,
 :root {
   height: 100%;
 }
+
+@layer components {
+  .counter-btn {
+    @apply flex h-8 w-8 cursor-pointer items-center justify-center rounded-full border-[1px] border-neutral-400 text-neutral-600 transition hover:border-neutral-600;
+  }
+}

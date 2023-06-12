@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import { TbBeach, TbMountain, TbPool } from 'react-icons/tb'
 import {
   GiBarn,
@@ -16,6 +17,9 @@ import { MdOutlineVilla } from 'react-icons/md'
 import Heading from '../components/Helper/Heading'
 import CategoryInput from '../components/Navbar/Categories/CategoryInput'
 import CountrySelect from '../components/Inputs/CountrySelect'
+import Counter from '../components/Counter/Counter'
+import ImageUpload from '../components/Inputs/ImageUpload'
+import Input from '../components/Inputs/Inputs'
 
 const categories = [
   {
@@ -134,4 +138,110 @@ const locationBodyContent = (location, setCustomValue, Map) => {
   )
 }
 
-export { categories, categoryBodyContent, locationBodyContent }
+const counterBodyContent = (
+  guestCount,
+  roomCount,
+  bathroomCount,
+  setCustomValue
+) => {
+  return (
+    <div className="flex flex-col gap-8">
+      <Heading
+        title="Share some basics about your place"
+        subtitle="What amenities do you have?"
+      />
+      <Counter
+        title="Guests"
+        subtitle="How many guests do you allow"
+        value={guestCount}
+        onChange={(value) => setCustomValue('guestCount', value)}
+      />
+      <Counter
+        title="Rooms"
+        subtitle="How many rooms do you have"
+        value={roomCount}
+        onChange={(value) => setCustomValue('roomCount', value)}
+      />
+      <Counter
+        title="Bathrooms"
+        subtitle="How many bathrooms do you have"
+        value={bathroomCount}
+        onChange={(value) => setCustomValue('bathroomCount', value)}
+      />
+    </div>
+  )
+}
+
+const uploadImageBodyContent = (imageSrc, setCustomValue) => {
+  return (
+    <div className="flex flex-col gap-8">
+      <Heading
+        title="Add a photo of your place"
+        subtitle="Show guests what your place look like!"
+      />
+      <ImageUpload
+        value={imageSrc}
+        onChange={(value) => setCustomValue('imageSrc', value)}
+      />
+    </div>
+  )
+}
+
+const descriptionBodyContent = (isLoading, register, errors) => {
+  return (
+    <div className="flex flex-col gap-8">
+      <Heading
+        title="How would you describe your place?"
+        subtitle="Short and sweet work best"
+      />
+      <Input
+        id="title"
+        label="Title"
+        disabled={isLoading}
+        register={register}
+        errors={errors}
+        required
+      />
+      <hr />
+      <Input
+        id="description"
+        label="Description"
+        disabled={isLoading}
+        register={register}
+        errors={errors}
+        required
+      />
+    </div>
+  )
+}
+
+const priceBodyContent = (isLoading, register, errors) => {
+  return (
+    <div className="flex flex-col gap-8">
+      <Heading
+        title="Now, set your price"
+        subtitle="How much do you charge per night?"
+      />
+      <Input
+        id="price"
+        label="Price"
+        type="number"
+        formatPrice
+        disabled={isLoading}
+        register={register}
+        errors={errors}
+        required
+      />
+    </div>
+  )
+}
+
+export {
+  categories,
+  categoryBodyContent,
+  locationBodyContent,
+  counterBodyContent,
+  uploadImageBodyContent,
+  descriptionBodyContent,
+  priceBodyContent,
+}

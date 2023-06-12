@@ -9,7 +9,10 @@ import getCurrentUser from './actions/getCurrentUser'
 const nunito = Nunito({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Airbnb',
+  title: {
+    default: 'Airbnb',
+    template: '%s',
+  },
   description: 'Welcome to AirBnb Clone',
 }
 
@@ -25,7 +28,7 @@ export default async function RootLayout({
         <ToasterProvider />
         <ModalsProvider />
         <Navbar currentUser={currentUser} />
-        {children}
+        <div className="pb-20 pt-28">{children}</div>
       </body>
     </html>
   )

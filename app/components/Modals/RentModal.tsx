@@ -1,11 +1,21 @@
 'use client'
 
 import { useState, useMemo } from 'react'
+import { FieldValues, SubmitHandler, useForm } from 'react-hook-form'
+import dynamic from 'next/dynamic'
+import axios from 'axios'
+import { toast } from 'react-hot-toast'
+import { useRouter } from 'next/navigation'
 import useRentModal from '@/app/hooks/useRentModal'
 import Modal from './index'
-import { categoryBodyContent, locationBodyContent } from '@/app/constants'
-import { FieldValues, useForm } from 'react-hook-form'
-import dynamic from 'next/dynamic'
+import {
+  categoryBodyContent,
+  counterBodyContent,
+  descriptionBodyContent,
+  locationBodyContent,
+  priceBodyContent,
+  uploadImageBodyContent,
+} from '@/app/constants'
 
 enum STEPS {
   CATEGORY = 0,
@@ -18,7 +28,9 @@ enum STEPS {
 
 const RentModal = () => {
   const [step, setStep] = useState(STEPS.CATEGORY)
+  const [isLoading, setIsLoading] = useState(false)
   const rentModal = useRentModal()
+  const router = useRouter()
   const {
     register,
     handleSubmit,
@@ -41,6 +53,14 @@ const RentModal = () => {
   })
   const category = watch('category')
   const location = watch('location')
+  const guestCount = watch('guestCount')
+  const roomCount = watch('roomCount')
+  const bathroomCount = watch('bathroomCount')
+  const imageSrc = watch('imageSrc')
+  const price = watch('price')
+  const title = watch('title')
+  const description = watch('description')
+
   const setCustomValue = (id: string, value: any) => {
     setValue(id, value, {
       shouldDirty: true,
@@ -73,6 +93,25 @@ const RentModal = () => {
     setStep((value) => value + 1)
   }
 
+  const onSubmit: SubmitHandler<FieldValues> = (data) => {
+    if (step !== STEPS.PRICE) {
+      return onNext()
+    }
+
+    setIsLoading(true)
+    axios
+      .post('/api/listings', data)
+      .then(() => {
+        toast.success('Your place has been resgitered!')
+        setStep(STEPS.CATEGORY)
+        reset()
+        rentModal.onClose()
+        router.refresh()
+      })
+      .catch(() => toast.error('Something went wrong. Please try again'))
+      .finally(() => setIsLoading(false))
+  }
+
   const actionLabel = useMemo(() => {
     if (step === STEPS.PRICE) {
       return 'Create'
@@ -88,16 +127,21 @@ const RentModal = () => {
       bodyContent = locationBodyContent(location, setCustomValue, Map)
       break
     case STEPS.INFO:
-      // code block
+      bodyContent = counterBodyContent(
+        guestCount,
+        roomCount,
+        bathroomCount,
+        setCustomValue
+      )
       break
     case STEPS.IMAGES:
-      // code block
+      bodyContent = uploadImageBodyContent(imageSrc, setCustomValue)
       break
     case STEPS.DESCRIPTION:
-      // code block
+      bodyContent = descriptionBodyContent(isLoading, register, errors)
       break
     case STEPS.PRICE:
-      // code block
+      bodyContent = priceBodyContent(isLoading, register, errors)
       break
     default:
       return <div></div>
@@ -109,7 +153,7 @@ const RentModal = () => {
       body={bodyContent}
       isOpen={rentModal.isOpen}
       onClose={rentModal.onClose}
-      onSubmit={onNext}
+      onSubmit={handleSubmit(onSubmit)}
       actionLabel={actionLabel}
       secondaryAction={step === STEPS.CATEGORY ? undefined : onBack}
       secondaryActionLabel={secondaryActionLabel}
