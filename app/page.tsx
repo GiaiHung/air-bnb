@@ -1,5 +1,5 @@
 import getCurrentUser from './actions/getCurrentUser'
-import getListings from './actions/getListings'
+import getListings, { ListingsParams } from './actions/getListings'
 import ClientOnly from './components/ClientOnly'
 import Container from './components/Container'
 import EmptyState from './components/Helper/EmptyState'
@@ -9,9 +9,13 @@ export const metadata = {
   title: 'Airbnb | Homepage',
 }
 
-export default async function Home() {
+interface Props {
+  searchParams: ListingsParams
+}
+
+export default async function Home({ searchParams }: Props) {
   const currentUser = await getCurrentUser()
-  const listings = await getListings()
+  const listings = await getListings(searchParams)
 
   if (listings.length === 0) {
     return (
