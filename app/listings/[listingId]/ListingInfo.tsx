@@ -20,11 +20,12 @@ interface Props {
     | undefined
 }
 
+const Map = dynamic(() => import('@/app/components/Map/Map'), { ssr: false })
+
 const ListingInfo = ({ currentUser, listing, category }: Props) => {
   const { guestCount, roomCount, bathroomCount } = listing
   const { getByValue } = useCountries()
   const coordinates = getByValue(listing.locationValue)?.latlng
-  const Map = dynamic(() => import('@/app/components/Map/Map'), { ssr: false })
 
   return (
     <div className="col-span-4 flex flex-col gap-8">

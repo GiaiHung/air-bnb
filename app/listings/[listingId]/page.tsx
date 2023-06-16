@@ -4,6 +4,7 @@ import EmptyState from '@/app/components/Helper/EmptyState'
 import React from 'react'
 import ListingClient from './ListingClient'
 import getCurrentUser from '@/app/actions/getCurrentUser'
+import getReservations from '@/app/actions/getReservations'
 
 interface Props {
   params: {
@@ -14,6 +15,7 @@ interface Props {
 const ListDetail = async ({ params }: Props) => {
   const listing = await getListingById(params)
   const currentUser = await getCurrentUser()
+  const reservations = await getReservations(params)
 
   if (!listing) {
     return (
@@ -25,7 +27,11 @@ const ListDetail = async ({ params }: Props) => {
 
   return (
     <ClientOnly>
-      <ListingClient listing={listing} currentUser={currentUser} />
+      <ListingClient
+        listing={listing}
+        currentUser={currentUser}
+        reservations={reservations}
+      />
     </ClientOnly>
   )
 }
