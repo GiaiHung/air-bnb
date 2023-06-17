@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic'
+
 import getCurrentUser from './actions/getCurrentUser'
 import getListings, { ListingsParams } from './actions/getListings'
 import ClientOnly from './components/ClientOnly'
@@ -5,7 +7,6 @@ import Container from './components/Container'
 import EmptyState from './components/Helper/EmptyState'
 import ListingCard from './components/Listings/ListingCard'
 
-export const dynamic = 'auto'
 export const metadata = {
   title: 'Airbnb | Homepage',
 }
