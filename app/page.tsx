@@ -5,6 +5,7 @@ import Container from './components/Container'
 import EmptyState from './components/Helper/EmptyState'
 import ListingCard from './components/Listings/ListingCard'
 
+export const dynamic = 'auto'
 export const metadata = {
   title: 'Airbnb | Homepage',
 }
