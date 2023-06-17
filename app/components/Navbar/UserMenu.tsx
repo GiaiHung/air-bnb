@@ -60,6 +60,7 @@ const UserMenu = ({ currentUser }: Props) => {
         <div className="absolute right-0 top-12 w-[40vw] overflow-hidden rounded-xl bg-white text-sm shadow-md md:w-3/4">
           {currentUser ? (
             <>
+              <MenuItem label="Home" onClick={() => router.push('/')} />
               <MenuItem
                 label="My trips"
                 onClick={() => router.push('/trips')}
