@@ -3,6 +3,7 @@
 import LoginModal from './LoginModal'
 import RegisterModal from './RegisterModal'
 import RentModal from './RentModal'
+import SearchModal from './SearchModal'
 
 const ModalsProvider = () => {
   return (
@@ -10,6 +11,7 @@ const ModalsProvider = () => {
       <LoginModal />
       <RegisterModal />
       <RentModal />
+      <SearchModal />
     </>
   )
 }

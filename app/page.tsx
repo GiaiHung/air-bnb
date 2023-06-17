@@ -24,6 +24,7 @@ export default async function Home({ searchParams }: Props) {
       </ClientOnly>
     )
   }
+
   return (
     <ClientOnly>
       <Container>

@@ -20,6 +20,7 @@ import CountrySelect from '../components/Inputs/CountrySelect'
 import Counter from '../components/Counter/Counter'
 import ImageUpload from '../components/Inputs/ImageUpload'
 import Input from '../components/Inputs/Inputs'
+import Calendar from '../listings/[listingId]/Calendar'
 
 const categories = [
   {
@@ -236,6 +237,76 @@ const priceBodyContent = (isLoading, register, errors) => {
   )
 }
 
+// For search modal
+const searchLocationBodyContent = (location, setLocation, Map) => {
+  return (
+    <div className="flex flex-col gap-8">
+      <Heading
+        title="Where do you wanna go?"
+        subtitle="Find the perfect location!"
+      />
+      <CountrySelect
+        value={location}
+        onChange={(value) => setLocation(value)}
+      />
+      <hr />
+      <Map center={location?.latlng} />
+    </div>
+  )
+}
+
+const searchDateBodyContent = (dateRange, setDateRange) => {
+  return (
+    <div className="flex flex-col gap-8">
+      <Heading
+        title="Where do you plan to go?"
+        subtitle="Make sure everyone is free!"
+      />
+      <Calendar
+        value={dateRange}
+        onChange={(value) => setDateRange(value.selection)}
+      />
+    </div>
+  )
+}
+
+const searchInfoBodyContent = (
+  guestCount,
+  roomCount,
+  bathroomCount,
+  setGuestCount,
+  setRoomCount,
+  setBathroomCount
+) => {
+  return (
+    <div className="flex flex-col gap-8">
+      <Heading title="More information" subtitle="Find your perfect place!" />
+      <Counter
+        onChange={(value) => setGuestCount(value)}
+        value={guestCount}
+        title="Guests"
+        subtitle="How many guests are coming?"
+      />
+      <hr />
+      <Counter
+        onChange={(value) => setRoomCount(value)}
+        value={roomCount}
+        title="Rooms"
+        subtitle="How many rooms do you need?"
+      />
+      <hr />
+      <Counter
+        onChange={(value) => {
+          setBathroomCount(value)
+        }}
+        value={bathroomCount}
+        title="Bathrooms"
+        subtitle="How many bahtrooms do you need?"
+      />
+    </div>
+  )
+}
+
 export {
   categories,
   categoryBodyContent,
@@ -244,4 +315,7 @@ export {
   uploadImageBodyContent,
   descriptionBodyContent,
   priceBodyContent,
+  searchLocationBodyContent,
+  searchDateBodyContent,
+  searchInfoBodyContent,
 }
